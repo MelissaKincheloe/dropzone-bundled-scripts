@@ -7,11 +7,12 @@
 require 'dropzone'
 require 'rsync'
 require 'pastie_api'
+require 'is_gd'
 
 $dz = Dropzone.new
 script = ARGV[0]
 
-if (script =~ /(.*)\.rb/)
+if (script =~ /(.*)\.dropzone/)
   action = ARGV[1]
   $items = ARGV[2..-1]
   
@@ -21,10 +22,6 @@ if (script =~ /(.*)\.rb/)
   else
     method("dragged").call
   end
-
-elsif (script == /(.*)\.sh/)
-  # TODO: Handle bash script
-  
 else
-  puts "FILENAME ERROR"
+  puts "Filename error"
 end
