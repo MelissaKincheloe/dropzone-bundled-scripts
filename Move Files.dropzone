@@ -9,7 +9,7 @@
 # OptionsNIB: ChooseFolder
 
 def dragged
-  $dz.determinate("1")
+  $dz.determinate(true)
   
   move = true
   
@@ -38,7 +38,7 @@ def dragged
   
   finish_op = (move ? "Move" : "Copy")
   $dz.finish("#{finish_op} Complete")
-  $dz.url("0")
+  $dz.url(false)
 end
 
 def clicked

@@ -9,7 +9,7 @@
 # IconURL: http://aptonic.com/destinations/icons/mail.png
 
 def dragged
-  $dz.determinate("0")
+  $dz.determinate(false)
 
   if $items.length == 1 and not File.directory?($items[0])
     # Just add this file as an attachment
@@ -24,7 +24,7 @@ def dragged
     system("/bin/mkdir #{tmp_folder}")
     Rsync.do_copy($dz, $items, tmp_folder, false)
     $dz.begin("Creating zip archive...")
-    $dz.determinate("0")
+    $dz.determinate(false)
     system("/usr/bin/ditto -c -k -X --rsrc #{tmp_folder} /tmp/files.zip")
     system("/bin/rm -rf #{tmp_folder}")
     delete_zip = true
@@ -34,7 +34,7 @@ def dragged
   system("/bin/rm -f #{email_file}") if (delete_zip)
 
   $dz.finish("Message Created")
-  $dz.url("0")
+  $dz.url(false)
 end
 
 def clicked

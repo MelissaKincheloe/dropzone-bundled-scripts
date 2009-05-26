@@ -1,36 +1,33 @@
 #!/usr/bin/ruby
 
-# Wraps the shell functions
-
 class Dropzone
   $VERBOSE = nil
-
-  def initialize()
-	# Disable output buffering
 	$stdout.sync = true;
-  
-    # Define methods for each bash function
-    f = File.read("dz_functions.sh")
-    lines = f.split("\n")
-    lines.each do |line| 
-      if line =~ /function/
-        function = line.split(" ")[1] 
-        selfclass.send(:define_method, function) { |x| run_bash_function(function, x) }
-      end
-    end
-  end
 
-  def run_bash_function(command, args)
-    output = `/bin/bash -c 'source dz_functions.sh; #{command} "#{args}";'`
-	  output.split("\n").each do |line|
-		  puts line
-		  # Block until acknowledgement
-		  line = $stdin.gets
-	  end
+  def determinate(value)
+    output = (value ? "Determinate: 1" : "Determinate: 0")
+    send_output(output)
   end
   
-  def selfclass
-    (class << self; self; end)
+  def begin(message)
+    send_output("Begin_Message: #{message}")
   end
   
+  def finish(message)
+    send_output("Finish_Message: #{message}")
+  end
+  
+  def percent(value)
+    send_output("Progress: #{value}")
+  end
+  
+  def url(url)
+    (url ? send_output("URL: #{url}") : send_output("URL: 0"))
+  end
+  
+  def send_output(line)
+    puts line
+	  # Block until acknowledgement
+	  line = $stdin.gets
+  end
 end

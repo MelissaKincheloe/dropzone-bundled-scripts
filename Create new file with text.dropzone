@@ -12,7 +12,7 @@
 def dragged
   destination = "#{ENV['EXTRA_PATH']}"
 
-  $dz.determinate("0")
+  $dz.determinate(false)
   $dz.begin("Creating new text file...")
 
   output = `../CocoaDialog standard-inputbox --title "New Text File" --e --informative-text "Enter name for new text file (minus extension):"`
@@ -26,7 +26,7 @@ def dragged
   system("open \"#{destination}/#{filename}.txt\"")
 
   $dz.finish("Text Editor Launched")
-  $dz.url("0")
+  $dz.url(false)
 end
 
 def clicked

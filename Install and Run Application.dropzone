@@ -19,7 +19,7 @@ def dragged
   if $items[0] =~ /\.app/
     # Directly copy application
     $dz.begin("Copying application...")
-    $dz.determinate("1")
+    $dz.determinate(true)
     Rsync.do_copy($dz, $items, destination, false)
 
     # Find new app path
@@ -29,7 +29,7 @@ def dragged
   elsif $items[0] =~ /\.dmg/
     # Mount DMG, find application inside and copy
     $dz.begin("Attaching disk image...")
-    $dz.determinate("0")
+    $dz.determinate(false)
   
     # Use DiskImageMounter first if DMG has license agreement
     used_diskimagemounter = false
@@ -43,7 +43,7 @@ def dragged
       if num_volumes_before == num_volumes_after
         # Volume can't have mounted
         $dz.finish("Mount Failed")
-        $dz.url("0")
+        $dz.url(false)
         Process.exit
       end
       used_diskimagemounter = true
@@ -52,7 +52,7 @@ def dragged
     mount_result = `/usr/bin/hdid #{files}`
     if mount_result =~ /hdid:\sattach failed\s/
       $dz.finish("Mount Failed")
-      $dz.url("0")
+      $dz.url(false)
       Process.exit
     end
     
@@ -69,7 +69,7 @@ def dragged
   
     if app_file == ""
       $dz.finish("Application not found")
-      $dz.url("0")
+      $dz.url(false)
       Process.exit
     end
   
@@ -77,19 +77,19 @@ def dragged
     system("osascript ../AppleScripts/eject.scpt \"#{actual_vol_name}\"") if used_diskimagemounter
   
     $dz.begin("Copying application...")
-    $dz.determinate("1")
+    $dz.determinate(true)
     Rsync.do_copy($dz, "#{volume_path}/#{app_file}", destination, false)
     app_path = "#{destination}#{app_file}"
   
     dmg = true
   else 
     $dz.finish("Not an Application")
-    $dz.url("0")
+    $dz.url(false)
     Process.exit
   end
 
   # Launch application
-  $dz.determinate("0")
+  $dz.determinate(false)
   $dz.begin("Launching application...")
   system("open \"#{app_path}\"")
 
@@ -136,7 +136,7 @@ def dragged
   end
 
   $dz.finish("Application Installed")
-  $dz.url("0")
+  $dz.url(false)
 end
 
 def clicked

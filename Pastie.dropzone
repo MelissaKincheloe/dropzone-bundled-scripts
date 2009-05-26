@@ -9,7 +9,7 @@
 # IconURL: http://aptonic.com/destinations/icons/pastie.png
 
 def dragged
-  $dz.determinate("0")
+  $dz.determinate(false)
   $dz.begin("Performing Paste...")
 
   pastie = Pastie::API.new

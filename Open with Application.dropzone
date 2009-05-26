@@ -12,13 +12,13 @@ def dragged
   files = ""
   $items.each { |file| files += "\"#{file}\" "}
 
-  $dz.determinate("0")
+  $dz.determinate(false)
   $dz.begin("Launching Application")
 
   system("open -a \"#{ENV['EXTRA_PATH']}\" #{files}")
 
   $dz.finish("Application Launched")
-  $dz.url("0")
+  $dz.url(false)
 end
 
 def clicked
