@@ -15,7 +15,7 @@ def dragged
   $dz.determinate(false)
   $dz.begin("Creating new text file...")
 
-  output = `../CocoaDialog standard-inputbox --title "New Text File" --e --informative-text "Enter name for new text file (minus extension):"`
+  output = `./CocoaDialog standard-inputbox --title "New Text File" --e --informative-text "Enter name for new text file (minus extension):"`
   filename = output.split("\n")[1]
 
   # Create a new file and write to it   

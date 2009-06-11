@@ -20,7 +20,7 @@ def dragged
     # Directly copy application
     $dz.begin("Copying application...")
     $dz.determinate(true)
-    Rsync.do_copy($dz, $items, destination, false)
+    Rsync.do_copy($items, destination, false)
 
     # Find new app path
     full_source_path = files.split("/")
@@ -78,7 +78,7 @@ def dragged
   
     $dz.begin("Copying application...")
     $dz.determinate(true)
-    Rsync.do_copy($dz, "#{volume_path}/#{app_file}", destination, false)
+    Rsync.do_copy("#{volume_path}/#{app_file}", destination, false)
     app_path = "#{destination}#{app_file}"
   
     dmg = true

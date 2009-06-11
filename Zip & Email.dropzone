@@ -17,21 +17,13 @@ def dragged
     $dz.begin("Creating message with attachment")
     delete_zip = false
   else
-    # Copy to temporary folder and zip up
-    $dz.begin("Copying files...")
-    tmp_folder = "/tmp/dz_tmp/"
-    email_file = "/tmp/files.zip"
-    system("/bin/mkdir #{tmp_folder}")
-    Rsync.do_copy($dz, $items, tmp_folder, false)
-    $dz.begin("Creating zip archive...")
-    $dz.determinate(false)
-    system("/usr/bin/ditto -c -k -X --rsrc #{tmp_folder} /tmp/files.zip")
-    system("/bin/rm -rf #{tmp_folder}")
+    # Zip up files first
+    email_file = ZipFiles.zip($items, "files.zip")
     delete_zip = true
   end
 
   system("osascript ../AppleScripts/mail.scpt #{email_file}")
-  system("/bin/rm -f #{email_file}") if (delete_zip)
+  ZipFiles.delete_zip(email_file) if delete_zip
 
   $dz.finish("Message Created")
   $dz.url(false)

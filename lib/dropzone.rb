@@ -17,6 +17,17 @@ class Dropzone
     send_output("Finish_Message: #{message}")
   end
   
+  def alert(title, message)
+    send_output("Alert_Title: #{title}")
+    send_output("Alert: #{message}")
+  end
+  
+  def error(title, message)
+    send_output("Error_Title: #{title}")
+    send_output("Error: #{message}")
+    Process.exit
+  end
+  
   def percent(value)
     send_output("Progress: #{value}")
   end
