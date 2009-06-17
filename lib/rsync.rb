@@ -9,7 +9,6 @@ class Rsync
     # First we do a dry run to get the number of files to be copied
     stats = `rsync -a --stats --dry-run #{files} \"#{destination}\"`
     num_files = stats.split("\n")[2].split(" ")[4]
-    each_file_weight = (100 / (num_files.to_f)) / 100
 
     overall_percent = 0
     last_output = 0

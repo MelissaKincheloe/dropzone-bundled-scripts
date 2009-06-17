@@ -1,8 +1,7 @@
 #!/usr/bin/ruby
 
 # Dropzone calls this first
-# Loads a destination script
-# and calls the dragged or clicked function
+# Loads a destination script and calls the appropriate method
 
 SCRIPTS_DIR = File::expand_path("~/Library/Application Support/Dropzone/Destination Scripts")
 
@@ -16,6 +15,7 @@ require 'dropzone'
 require 'rsync'
 require 'zip_files'
 require 'ftp'
+require 'flickr'
 require 'pastie_api'
 require 'is_gd'
 
