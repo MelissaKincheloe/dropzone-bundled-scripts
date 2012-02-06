@@ -2,7 +2,7 @@
 
 # Dropzone Destination Info
 # Name: Flickr Upload
-# Description: Allows images to be uploaded to Flickr.
+# Description: Allows images to be uploaded to Flickr. Holding down the option key while dragging copies the direct image URL.
 # Handles: NSFilenamesPboardType
 # Events: Clicked, Dragged, Authorize, Get_Token
 # KeyModifiers: Option, Command

@@ -3,6 +3,8 @@
 # Dropzone calls this first
 # Loads a destination script and calls the appropriate method
 
+$:.unshift(File.dirname(__FILE__)) if RUBY_VERSION > '1.9'
+
 SCRIPTS_DIR = File::expand_path("~/Library/Application Support/Dropzone/Destination Scripts")
 
 # Check runner is being called from within the lib directory

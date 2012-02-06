@@ -10,23 +10,28 @@ class Flickr
   def self.authorize(fresh_auth = '0')
     auth_result = `#{$FLICKR_UPLOADER_PATH} authenticate #{fresh_auth} 2>&1`
     puts self.verify_output(auth_result, "FrobID")
+    line = $stdin.gets
   end
   
   def self.get_token(frob_id)
     get_token_result = `#{$FLICKR_UPLOADER_PATH} gettoken #{frob_id} 2>&1`
     puts self.verify_output(get_token_result, "Token")
+    line = $stdin.gets
   end
   
   def self.verify_output(result, expected)
-    parts = result.split(": ")
-    
-    if parts[0] == expected
-      return result
-    elsif parts[0] == "Error"
-      $dz.error($ERROR_TITLE, parts[1])
-    else
-      $dz.error($ERROR_TITLE, "Unexpected output received from FlickrUploader.")
+    lines = result.split("\n")
+    lines.each do |line|
+      cmd, msg = line.split(": ")
+      if cmd == expected
+        return line
+      elsif cmd == "Error"
+        $dz.error($ERROR_TITLE, msg)
+        break
+      end
     end
+    
+    $dz.error($ERROR_TITLE, "Unexpected output received from FlickrUploader - Output was #{result}")
   end
   
   def self.do_upload(source_files, auth_token, direct_url)
@@ -58,7 +63,10 @@ class Flickr
       escaped_localfile = localfile.gsub('"', '\"')
       escaped_localfile.gsub!('$', '\$')
       direct_url_arg = (direct_url ? "1" : "0")
-      
+      if auth_token == nil
+        $dz.error($ERROR_TITLE, "This destination is not properly authorized with your Flickr account. Please try authorizing again.")
+        Process.exit
+      end
       flickr = IO.popen("#{$FLICKR_UPLOADER_PATH} upload #{auth_token} \"#{escaped_localfile}\" #{direct_url_arg} 2>&1") do |f|
         while line = f.gets do
           command, message = line.split(": ")

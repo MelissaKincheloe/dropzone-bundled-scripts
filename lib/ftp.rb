@@ -44,10 +44,9 @@ class FTP
     alert_title = "FTP Upload Error"
     
     begin
-      timeout(20) {
-        ftp.connect(host, port)
-        ftp.login(user, pass)
-      }
+	ftp.connect(host, port)
+	ftp.login(user, pass)
+	
     rescue Timeout::Error
       $dz.error(alert_title, "Connection timed out.")
     rescue SocketError

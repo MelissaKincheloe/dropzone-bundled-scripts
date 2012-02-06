@@ -27,7 +27,7 @@ module Pastie
   )
 
   class API
-    PASTIE_URI = 'pastie.caboo.se'
+    PASTIE_URI = 'pastie.org'
 
     def paste(body, format='plaintext', is_private=false)
       raise InvalidParser unless valid_parser?(format)
@@ -44,7 +44,7 @@ module Pastie
       if resp.code == '302'
         return resp['location']
       else
-        raise Pastie::Error
+        return nil
       end
     end
 

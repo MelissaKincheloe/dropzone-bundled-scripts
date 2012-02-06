@@ -36,6 +36,10 @@ class Dropzone
     (url ? send_output("URL: #{url}") : send_output("URL: 0"))
   end
   
+  def text(text)
+    (text ? send_output("Text: #{text}") : send_output("Text: 0"))
+  end
+  
   def send_output(line)
     puts line
 	  # Block until acknowledgement

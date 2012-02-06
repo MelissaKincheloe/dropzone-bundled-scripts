@@ -2,7 +2,7 @@
 
 # Dropzone Destination Info
 # Name: Move Files
-# Description: Allows you to move dropped files to a specified folder.
+# Description: Allows you to move dropped files to a specified folder. Hold down option while dragging to copy.
 # Handles: NSFilenamesPboardType
 # Creator: Aptonic Software
 # URL: http://aptonic.com
@@ -30,5 +30,6 @@ def dragged
 end
 
 def clicked
-  system("open \"#{ENV['EXTRA_PATH']}\"")
+  escaped_path = ENV['EXTRA_PATH'].gsub(/["`]/){ |s| '\\' + s }
+  system("open \"#{escaped_path}\"")
 end
