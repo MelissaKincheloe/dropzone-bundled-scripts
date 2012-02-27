@@ -17,6 +17,6 @@ def dragged
 end
 
 def clicked
-  escaped_path = ENV['EXTRA_PATH'].gsub(/["`]/){ |s| '\\' + s }
+  escaped_path = ENV['EXTRA_PATH'].gsub(/["`$\\]/){ |s| '\\' + s }
   system("open \"#{escaped_path}\"")
 end

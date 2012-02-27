@@ -26,7 +26,7 @@ class Rsync
       
         if existing_files.include?(file) and not replace_result =~ /YES-ALL/ and not replace_result =~ /NO-ALL/
           # File exists
-          escaped_base_name = base_name.gsub(/["`]/){ |s| '\\' + s }
+          escaped_base_name = base_name.gsub(/["`$\\]/){ |s| '\\' + s }
           if existing_files.length > 1
             replace_result = `#{$REPLACE_DIALOG_PATH} \"#{escaped_base_name}\" multiple 2>&1`
           elsif existing_files.length == 1
@@ -39,7 +39,7 @@ class Rsync
           $dz.url(false)
           Process.exit
         end
-        escaped_file = file.gsub(/["`]/){ |s| '\\' + s }
+        escaped_file = file.gsub(/["`$\\]/){ |s| '\\' + s }
         
         if replace_result =~ /YES/ or replace_result =~ /YES-ALL/
           remove_files << base_name
@@ -50,7 +50,7 @@ class Rsync
   
     return false if files == ""
   
-    escaped_destination = destination.gsub(/["`]/){ |s| '\\' + s }
+    escaped_destination = destination.gsub(/["`$\\]/){ |s| '\\' + s }
   
     if (!remove_sent)    
       # Use Rsync
